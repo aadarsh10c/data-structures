@@ -16,16 +16,14 @@ type Node[K comparable] struct {
 func (l *LinkedList[T]) GetNode(val T) (*Node[T], bool) {
 	ptr := l.start
 	found := false
-	resultNode := Node[T]{}
-	for ptr.next != nil {
-		if found := (ptr.data == val); found {
-			resultNode.data = ptr.data
-			resultNode.next = ptr.next
-			break
+	lllen := l.Len()
+	for i := 0; i < lllen; i++ {
+		if found = (ptr.data == val); found {
+			return ptr, found
 		}
 		ptr = ptr.next
 	}
-	return &resultNode, found
+	return nil, found
 }
 
 // returns length of the linkd list
@@ -93,8 +91,13 @@ func (l *LinkedList[T]) AddAfter(valueAfter, newValue T) bool {
 
 	//fetch the valueafter node and add the new Node after it
 	if ptr, found := l.GetNode(valueAfter); found {
-		ptr.next = newNode.next
-		ptr.next = newNode
+		if ptr.next != nil {
+			newNode.next = ptr.next
+			ptr.next = newNode
+		}else{
+			//valueAfter is a last value
+			ptr.next = newNode
+		}
 		return true
 	} else {
 		return false

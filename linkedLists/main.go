@@ -11,11 +11,13 @@ func main() {
 	trains := single.Create("Train1")
 	//Add value at begining
 	trains.AddAtStart("Train2")
+	node, found := trains.GetNode("Train2")
+	fmt.Printf("%v , %t\n", node, found)
 	trains.AddAtStart("Train3")
-	done := trains.AddAfter("Train2", "Traiin100")
 	//add at end
 	trains.AddAtEnd("Train4")
-	fmt.Printf("was it added %t", done)
+	done := trains.AddAfter("Train3", "Train101")
+	fmt.Printf("Done %t\n", done)
 	fmt.Printf("list length %d\n", trains.Len())
 	fmt.Printf("returned Train linked list : %v\n", trains.Values())
 }

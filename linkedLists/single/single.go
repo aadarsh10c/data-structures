@@ -13,7 +13,7 @@ type Node[K comparable] struct {
 //List of methods of Single Linked List
 
 // Traverse the list ad return the searched node
-func (l *LinkedList[T]) GetNode(val T) ( *Node[T] , bool) {
+func (l *LinkedList[T]) GetNode(val T) (*Node[T], bool) {
 	ptr := l.start
 	found := false
 	resultNode := Node[T]{}
@@ -31,12 +31,19 @@ func (l *LinkedList[T]) GetNode(val T) ( *Node[T] , bool) {
 // returns length of the linkd list
 func (l *LinkedList[T]) Len() int {
 	length := 0
-	ptr := l.start
-	for ptr.next != nil {
+	if l.start == nil {
+		return length
+	} else {
+		//point to first node
+		ptr := l.start
 		length++
-		ptr = ptr.next
+		for ptr.next != nil {
+			length++
+			ptr = ptr.next
+		}
+		return length
 	}
-	return length
+
 }
 
 // Add value at the start of the linked list
@@ -73,7 +80,7 @@ func (l *LinkedList[T]) AddAtEnd(value T) {
 }
 
 // Add the value after a node
-func (l *LinkedList[T]) AddAfter(valueAfter, newValue T) bool{
+func (l *LinkedList[T]) AddAfter(valueAfter, newValue T) bool {
 	//if linked list is empty
 	if l.start == nil {
 		l.AddAtStart(newValue)
@@ -85,11 +92,11 @@ func (l *LinkedList[T]) AddAfter(valueAfter, newValue T) bool{
 	newNode.data = newValue
 
 	//fetch the valueafter node and add the new Node after it
-	if ptr, found := l.GetNode(valueAfter); found{
+	if ptr, found := l.GetNode(valueAfter); found {
 		ptr.next = newNode.next
 		ptr.next = newNode
 		return true
-	}else{
+	} else {
 		return false
 	}
 
@@ -103,16 +110,23 @@ func (l *LinkedList[T]) Values() []T {
 	}
 
 	//traverse the Linked list add values to the result slice
-	result := make([]T, l.Len())
+	lllen := l.Len()
+	result := make([]T, lllen)
 
 	//point the first value
 	ptr := l.start
-
-	for ptr.next != nil {
-		result = append(result, ptr.data)
+	for i := 0; i < lllen; i++ {
+		result[i] = ptr.data
 		ptr = ptr.next
 	}
-
 	return result
+}
 
+// creates a linked list and initialises first node with the given value
+func Create[T comparable](value T) *LinkedList[T] {
+	l := new(LinkedList[T])
+	newNode := new(Node[T])
+	newNode.data = value
+	l.start = newNode
+	return l
 }

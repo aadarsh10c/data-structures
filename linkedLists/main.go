@@ -16,7 +16,7 @@ func main() {
 	trains.AddAtStart("Train3")
 	//add at end
 	trains.AddAtEnd("Train4")
-	done := trains.AddAfter("Train3", "Train101")
+	done := trains.AddBefore("Train3", "Train101")
 	fmt.Printf("Done %t\n", done)
 	fmt.Printf("list length %d\n", trains.Len())
 	fmt.Printf("returned Train linked list : %v\n", trains.Values())

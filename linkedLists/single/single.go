@@ -94,7 +94,7 @@ func (l *LinkedList[T]) AddAfter(valueAfter, newValue T) bool {
 		if ptr.next != nil {
 			newNode.next = ptr.next
 			ptr.next = newNode
-		}else{
+		} else {
 			//valueAfter is a last value
 			ptr.next = newNode
 		}
@@ -102,7 +102,32 @@ func (l *LinkedList[T]) AddAfter(valueAfter, newValue T) bool {
 	} else {
 		return false
 	}
+}
 
+// Add the Value before the target value
+func (l *LinkedList[T]) AddBefore(targetValue, newValue T) bool {
+	//if linked list is empty
+	if l.start == nil {
+		l.AddAtStart(newValue)
+		return true
+	}
+
+	//create a new Node
+	newNode := new(Node[T])
+	newNode.data = newValue
+	ptr := l.start
+	prevPtr := ptr
+
+	for prevPtr.next != nil {
+		if ptr.data == targetValue {
+			newNode.next = prevPtr.next
+			prevPtr.next = newNode
+			return true
+		}
+		prevPtr.next = ptr
+		ptr = ptr.next
+	}
+	return false
 }
 
 // Return all the values returns a slice of values present in the Linked List

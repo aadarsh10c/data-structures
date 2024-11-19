@@ -59,9 +59,10 @@ func (d *DynamicStack[K]) Display() ([]K, error) {
 	if d.top == nil {
 		return list, errors.New("stack is empty")
 	} else {
-		for d.top != nil {
-			list = append(list, d.top.data)
-			d.top = d.top.next
+		topPtr := d.top
+		for topPtr != nil {
+			list = append(list, topPtr.data)
+			topPtr = topPtr.next
 		}
 	}
 	return list, nil

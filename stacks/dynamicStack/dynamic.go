@@ -67,3 +67,23 @@ func (d *DynamicStack[K]) Display() ([]K, error) {
 	}
 	return list, nil
 }
+
+func ReverseList[K comparable](input []K) (reverseList []K, err error) {
+	if len(input) == 0 {
+		return nil, errors.New("list is empty")
+	}
+	if len(input) == 1 {
+		return input, nil
+	}
+	//create a stack
+	s := CreateDynamicStack[K]()
+	for _, val := range input {
+		s.Push(val)
+	}
+	reverseList, err = s.Display()
+	if err != nil {
+		return nil, err
+	}
+	return reverseList, nil
+
+}
